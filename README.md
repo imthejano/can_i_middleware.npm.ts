@@ -16,7 +16,7 @@ npm install can_i_middleware_imjano
 import canIMiddleware
 
 ```javascript
-const canI = require('can_i_middleware_imjano')
+const canIMiddleware = require('can_i_middleware_imjano')
 ```
 
 Create a grants object, in this example ROOT and GUEST are roles
@@ -83,12 +83,12 @@ const roleLocationPath = 'req.auth.user.role'
 Now you can build the middleware and implement in your app
 
 ```javascript
-const canIMiddleware = canI.build({
+const canI = canIMiddleware.build({
 	grants: grants,
 	roleLocationPath: roleLocationPath,
 	onDenied: onDenied,
 })
-app.get('foo/', canIMiddleware.create('own', 'FOO'), (req, res, next) => {
+app.get('foo/', canI.create('own', 'FOO'), (req, res, next) => {
 	res.status(200).json({ res: 'foo' })
 })
 ```
