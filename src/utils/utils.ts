@@ -1,9 +1,5 @@
 import getObjectInObject from 'get_object_in_object_imjano'
-import {
-	TBelonging,
-	TCanIMiddleware,
-	TCanIMiddlewareConfig,
-} from '../types/types'
+import { TBelonging, TCanIMiddleware, TCanIMiddlewareConfig } from '../types'
 
 const onDeniedDefaultFunction = (req: any, res: any, next: any) =>
 	res
@@ -17,16 +13,16 @@ const buildIsGrantedFunction = (config: TCanIMiddlewareConfig) => {
 		return {
 			for: (
 				effect: 'create' | 'update' | 'read' | 'delete',
-				belonging: 'own' | 'any',
-				content: string
+				belonging: TBelonging,
+				resource: string
 			) => {
-				content = content.toUpperCase()
+				resource = resource.toUpperCase()
 				if (grants[role]) {
 					if (grants[role].can[effect]) {
 						if (grants[role]['can'][effect][belonging]) {
 							if (
 								grants[role]['can'][effect][belonging].indexOf(
-									content
+									resource
 								) != -1
 							)
 								return true

@@ -2,11 +2,11 @@ import {
 	TBelonging,
 	TCanIMiddleware,
 	TCanIMiddlewareConfig,
-	TCanIMiddlewareResources,
-} from './types/types'
+	TCanIMiddlewareResourcesDict,
+} from './types'
 import utils from './utils/utils'
 
-let resources: TCanIMiddlewareResources = {
+let resources: TCanIMiddlewareResourcesDict = {
 	FOO: 'FOO',
 }
 

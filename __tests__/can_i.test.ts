@@ -1,4 +1,4 @@
-import CanIMiddleware from '../src/main'
+import CanIMiddleware from '../src'
 const grants = {
 	ROOT: {
 		can: {
