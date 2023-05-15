@@ -1,3 +1,21 @@
+export type TCanIMiddleware = {
+	create: (
+		belonging: TBelonging,
+		resource: string
+	) => (request: any, response: any, next: any) => void
+	read: (
+		belonging: TBelonging,
+		resource: string
+	) => (request: any, response: any, next: any) => void
+	update: (
+		belonging: TBelonging,
+		resource: string
+	) => (request: any, response: any, next: any) => void
+	delete: (
+		belonging: TBelonging,
+		resource: string
+	) => (request: any, response: any, next: any) => void
+}
 type TCanIMiddlewareResources = Array<string>
 type TCanIMiddlewareBelonging = {
 	own: TCanIMiddlewareResources

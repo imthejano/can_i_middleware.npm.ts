@@ -83,7 +83,7 @@ const roleLocationPath = 'req.auth.user.role'
 Now you can build the middleware and implement in your app
 
 ```javascript
-const canI = canIMiddleware.build({
+const canI = canIMiddleware.configure({
 	grants: grants,
 	roleLocationPath: roleLocationPath,
 	onDenied: onDenied,

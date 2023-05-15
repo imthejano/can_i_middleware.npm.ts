@@ -54,7 +54,7 @@ const onDenied = (req: any, res: any, next: any) => {
 	console.log('access denied')
 }
 
-const canI = CanIMiddleware.build({
+const canI = CanIMiddleware.configure({
 	grants: grants,
 	roleLocationPath: 'auth.user.role',
 	onDenied: onDenied,
