@@ -1,6 +1,6 @@
 {
 	"name": "can_i_middleware_imjano",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "CanIMiddleware is a custom middleware for Express.js applications that grants access to resources based on user roles. It provides a simple and flexible way to manage authorization and control access to different parts of your application.",
 	"main": "dist/main.js",
 	"scripts": {
