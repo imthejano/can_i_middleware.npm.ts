@@ -16,7 +16,8 @@ export type TCanIMiddleware = {
 		resource: string
 	) => (request: any, response: any, next: any) => void
 }
-type TCanIMiddlewareResources = Array<string>
+export type TCanIMiddlewareResources = Record<string, string>
+
 type TCanIMiddlewareBelonging = {
 	own: TCanIMiddlewareResources
 	any: TCanIMiddlewareResources
@@ -36,6 +37,7 @@ export type TCanIMiddlewareGrants = Record<
 >
 
 export type TCanIMiddlewareConfig = {
+	resources?: TCanIMiddlewareResources
 	grants: TCanIMiddlewareGrants
 	onDenied?: (req: any, res: any, next: any) => void
 	roleLocationPath: string

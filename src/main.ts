@@ -2,8 +2,13 @@ import {
 	TBelonging,
 	TCanIMiddleware,
 	TCanIMiddlewareConfig,
+	TCanIMiddlewareResources,
 } from './types/types'
 import utils from './utils/utils'
+
+let resources: TCanIMiddlewareResources = {
+	FOO: 'FOO',
+}
 
 let canI: TCanIMiddleware = {
 	create: function (
@@ -34,6 +39,7 @@ let canI: TCanIMiddleware = {
 
 export default {
 	configure: (config: TCanIMiddlewareConfig): TCanIMiddleware => {
+		resources = config.resources ?? resources
 		canI = utils.buildMiddleware(config)
 		return canI
 	},
