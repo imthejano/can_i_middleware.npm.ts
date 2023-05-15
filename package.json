@@ -8,7 +8,18 @@
 		"test": "jest"
 	},
 	"typings": "dist/main.d.ts",
-	"keywords": [],
+	"keywords": [
+		"middleware",
+		"canI",
+		"can i",
+		"grants",
+		"express",
+		"roles",
+		"role",
+		"auth",
+		"authorization",
+		"access"
+	],
 	"author": "Alejandro garcia <imjano@outlook.com>",
 	"license": "ISC",
 	"devDependencies": {
