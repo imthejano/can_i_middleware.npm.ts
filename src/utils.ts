@@ -1,5 +1,9 @@
 import getObjectInObject from 'get_object_in_object_imjano'
-import { TBelonging, TCanIMiddleware, TCanIMiddlewareConfig } from '../types'
+import {
+	TCanIMiddlewareBelongingKey,
+	TCanIMiddleware,
+	TCanIMiddlewareConfig,
+} from './types'
 
 const onDeniedDefaultFunction = (req: any, res: any, next: any) =>
 	res
@@ -13,7 +17,7 @@ const buildIsGrantedFunction = (config: TCanIMiddlewareConfig) => {
 		return {
 			for: (
 				effect: 'create' | 'update' | 'read' | 'delete',
-				belonging: TBelonging,
+				belonging: TCanIMiddlewareBelongingKey,
 				resource: string
 			) => {
 				resource = resource.toUpperCase()
@@ -40,7 +44,7 @@ const buildMiddleware = (config: TCanIMiddlewareConfig): TCanIMiddleware => {
 	const onDenied: (req: any, res: any, next: any) => void =
 		config.onDenied ?? onDeniedDefaultFunction
 	return {
-		create: (belonging: TBelonging, resource: string) => {
+		create: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
 			return (req: any, res: any, next: any) => {
 				let role = (
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'
@@ -49,7 +53,7 @@ const buildMiddleware = (config: TCanIMiddlewareConfig): TCanIMiddleware => {
 				else onDenied(req, res, next)
 			}
 		},
-		read: (belonging: TBelonging, resource: string) => {
+		read: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
 			return (req: any, res: any, next: any) => {
 				let role = (
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'
@@ -58,7 +62,7 @@ const buildMiddleware = (config: TCanIMiddlewareConfig): TCanIMiddleware => {
 				else onDenied(req, res, next)
 			}
 		},
-		update: (belonging: TBelonging, resource: string) => {
+		update: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
 			return (req: any, res: any, next: any) => {
 				let role = (
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'
@@ -67,7 +71,7 @@ const buildMiddleware = (config: TCanIMiddlewareConfig): TCanIMiddleware => {
 				else onDenied(req, res, next)
 			}
 		},
-		delete: (belonging: TBelonging, resource: string) => {
+		delete: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
 			return (req: any, res: any, next: any) => {
 				let role = (
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'

@@ -1,13 +1,13 @@
 {
-	"name": "can_i_middleware_imjano",
-	"version": "1.2.2",
-	"description": "CanIMiddleware is a custom middleware for Express.js applications that grants access to resources based on user roles. It provides a simple and flexible way to manage authorization and control access to different parts of your application.",
-	"main": "dist/index.js",
+	"name": "imjano_can_i_middleware",
+	"version": "1.0.0",
+	"description": "CanI Middleware is a custom middleware for Express.js applications that grants access to resources based on user roles. It provides a simple and flexible way to manage authorization and control access to different parts of your application.",
+	"main": "module/index.js",
 	"scripts": {
 		"build": "tsc",
 		"test": "jest"
 	},
-	"types": "types.d.ts",
+	"types": "module/index.d.ts",
 	"keywords": [
 		"middleware",
 		"canI",
@@ -20,7 +20,7 @@
 		"authorization",
 		"access"
 	],
-	"author": "Alejandro garcia <imjano@outlook.com>",
+	"author": "Alejandro Garcia <imjano@outlook.com>",
 	"license": "ISC",
 	"devDependencies": {
 		"@types/jest": "^29.5.1",

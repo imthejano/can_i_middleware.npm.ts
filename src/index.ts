@@ -1,47 +1,58 @@
 import {
-	TBelonging,
+	TCanIMiddlewareBelongingKey,
 	TCanIMiddleware,
 	TCanIMiddlewareConfig,
 	TCanIMiddlewareResourcesDict,
 } from './types'
-import utils from './utils/utils'
 
-let resources: TCanIMiddlewareResourcesDict = {
+import utils from './utils'
+
+let defaultResources: TCanIMiddlewareResourcesDict = {
 	FOO: 'FOO',
 }
 
-let canI: TCanIMiddleware = {
+let defaultCanI: TCanIMiddleware = {
 	create: function (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	): (request: any, response: any, next: any) => void {
-		throw new Error('Function not implemented.')
+		return (request: any, response: any, next: any) =>
+			response.status(500).json({ error: 'Function not implemented' })
 	},
 	read: function (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	): (request: any, response: any, next: any) => void {
-		throw new Error('Function not implemented.')
+		return (request: any, response: any, next: any) =>
+			response.status(500).json({ error: 'Function not implemented' })
 	},
 	update: function (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	): (request: any, response: any, next: any) => void {
-		throw new Error('Function not implemented.')
+		return (request: any, response: any, next: any) =>
+			response.status(500).json({ error: 'Function not implemented' })
 	},
 	delete: function (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	): (request: any, response: any, next: any) => void {
-		throw new Error('Function not implemented.')
+		return (request: any, response: any, next: any) =>
+			response.status(500).json({ error: 'Function not implemented' })
 	},
 }
 
-export default {
-	configure: (config: TCanIMiddlewareConfig): TCanIMiddleware => {
-		resources = config.resources ?? resources
-		canI = utils.buildMiddleware(config)
-		return canI
-	},
-	canI,
+export default class CanIMiddleware {
+	static canI: TCanIMiddleware = defaultCanI
+	static resources: TCanIMiddlewareResourcesDict = defaultResources
+	static configure(config: TCanIMiddlewareConfig): TCanIMiddleware {
+		CanIMiddleware.resources = config.resources ?? defaultResources
+		CanIMiddleware.canI = utils.buildMiddleware(config)
+		return CanIMiddleware.canI
+	}
+
+	constructor(config: TCanIMiddlewareConfig) {
+		CanIMiddleware.resources = config.resources ?? defaultResources
+		CanIMiddleware.canI = utils.buildMiddleware(config)
+	}
 }

@@ -1,40 +1,40 @@
 export type TCanIMiddleware = {
 	create: (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	) => (request: any, response: any, next: any) => void
 	read: (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	) => (request: any, response: any, next: any) => void
 	update: (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	) => (request: any, response: any, next: any) => void
 	delete: (
-		belonging: TBelonging,
+		belonging: TCanIMiddlewareBelongingKey,
 		resource: string
 	) => (request: any, response: any, next: any) => void
 }
 export type TCanIMiddlewareResources = Array<string>
 export type TCanIMiddlewareResourcesDict = Record<string, string>
 
-type TCanIMiddlewareBelonging = {
+export type TCanIMiddlewareBelonging = {
 	own: TCanIMiddlewareResources
 	any: TCanIMiddlewareResources
 }
-type TCanIMiddlewareEffect = {
+export type TCanIMiddlewareCRUDEffect = {
 	create: TCanIMiddlewareBelonging
 	update: TCanIMiddlewareBelonging
 	read: TCanIMiddlewareBelonging
 	delete: TCanIMiddlewareBelonging
 }
 
-export type TBelonging = 'own' | 'any'
+export type TCanIMiddlewareBelongingKey = 'own' | 'any'
 
 export type TCanIMiddlewareGrants = Record<
 	string,
-	Record<'can', TCanIMiddlewareEffect>
+	Record<'can', TCanIMiddlewareCRUDEffect>
 >
 
 export type TCanIMiddlewareConfig = {
