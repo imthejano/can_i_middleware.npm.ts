@@ -1,46 +1,14 @@
 import CanIMiddleware from '../src'
-const grants = {
-	ROOT: {
-		can: {
-			create: {
-				own: ['FOO'],
-				any: ['BAR'],
-			},
-			read: {
-				own: [],
-				any: [],
-			},
-			update: {
-				own: [],
-				any: [],
-			},
-			delete: {
-				own: [],
-				any: [],
-			},
-		},
+const grants = [
+	{
+		role: 'root',
+		canCreateOwn: ['FOO'],
+		canReadAny: ['BAR'],
 	},
-	GUEST: {
-		can: {
-			create: {
-				own: [],
-				any: [],
-			},
-			read: {
-				own: [],
-				any: [],
-			},
-			update: {
-				own: [],
-				any: [],
-			},
-			delete: {
-				own: [],
-				any: [],
-			},
-		},
+	{
+		role: 'guest',
 	},
-}
+]
 
 const reqRoot = {
 	auth: {

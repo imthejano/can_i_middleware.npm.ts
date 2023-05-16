@@ -1,8 +1,10 @@
 import getObjectInObject from 'get_object_in_object_imjano'
 import {
-	TCanIMiddlewareBelongingKey,
+	TCanIMiddlewareGrantsBelongingKey,
 	TCanIMiddleware,
 	TCanIMiddlewareConfig,
+	TCanIMiddlewareGrants,
+	TCanIMiddlewareGrantedRole,
 } from './types'
 
 const onDeniedDefaultFunction = (req: any, res: any, next: any) =>
@@ -10,17 +12,48 @@ const onDeniedDefaultFunction = (req: any, res: any, next: any) =>
 		.status(403)
 		.json({ error: 'you do not have permissions for this resource' })
 
+const parseRoleList = (
+	grantedRoles: Array<TCanIMiddlewareGrantedRole>
+): TCanIMiddlewareGrants => {
+	let grants: TCanIMiddlewareGrants = {}
+	grantedRoles.forEach((grantedRole) => {
+		grants[grantedRole.role] = {
+			can: {
+				create: {
+					own: grantedRole.canCreateOwn ?? [],
+					any: grantedRole.canCreateAny ?? [],
+				},
+				read: {
+					own: grantedRole.canReadOwn ?? [],
+					any: grantedRole.canReadAny ?? [],
+				},
+				update: {
+					own: grantedRole.canUpdateOwn ?? [],
+					any: grantedRole.canUpdateAny ?? [],
+				},
+				delete: {
+					own: grantedRole.canUpdateOwn ?? [],
+					any: grantedRole.canUpdateAny ?? [],
+				},
+			},
+		}
+	})
+	return grants
+}
+
 const buildIsGrantedFunction = (config: TCanIMiddlewareConfig) => {
-	const grants = config.grants
+	let grants: TCanIMiddlewareGrants
+	if (Array.isArray(config.grants)) grants = parseRoleList(config.grants)
+	else grants = config.grants
 	return (role: string) => {
-		role = role.toUpperCase()
+		role = role
 		return {
 			for: (
 				effect: 'create' | 'update' | 'read' | 'delete',
-				belonging: TCanIMiddlewareBelongingKey,
+				belonging: TCanIMiddlewareGrantsBelongingKey,
 				resource: string
 			) => {
-				resource = resource.toUpperCase()
+				resource = resource
 				if (grants[role]) {
 					if (grants[role].can[effect]) {
 						if (grants[role]['can'][effect][belonging]) {
@@ -44,38 +77,46 @@ const buildMiddleware = (config: TCanIMiddlewareConfig): TCanIMiddleware => {
 	const onDenied: (req: any, res: any, next: any) => void =
 		config.onDenied ?? onDeniedDefaultFunction
 	return {
-		create: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
+		create: (
+			belonging: TCanIMiddlewareGrantsBelongingKey,
+			resource: string
+		) => {
 			return (req: any, res: any, next: any) => {
-				let role = (
+				let role =
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'
-				).toUpperCase()
 				if (isGranted(role).for('create', belonging, resource)) next()
 				else onDenied(req, res, next)
 			}
 		},
-		read: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
+		read: (
+			belonging: TCanIMiddlewareGrantsBelongingKey,
+			resource: string
+		) => {
 			return (req: any, res: any, next: any) => {
-				let role = (
+				let role =
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'
-				).toUpperCase()
 				if (isGranted(role).for('read', belonging, resource)) next()
 				else onDenied(req, res, next)
 			}
 		},
-		update: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
+		update: (
+			belonging: TCanIMiddlewareGrantsBelongingKey,
+			resource: string
+		) => {
 			return (req: any, res: any, next: any) => {
-				let role = (
+				let role =
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'
-				).toUpperCase()
 				if (isGranted(role).for('update', belonging, resource)) next()
 				else onDenied(req, res, next)
 			}
 		},
-		delete: (belonging: TCanIMiddlewareBelongingKey, resource: string) => {
+		delete: (
+			belonging: TCanIMiddlewareGrantsBelongingKey,
+			resource: string
+		) => {
 			return (req: any, res: any, next: any) => {
-				let role = (
+				let role =
 					getObjectInObject(req, config.roleLocationPath) ?? 'GUEST'
-				).toUpperCase()
 				if (isGranted(role).for('delete', belonging, resource)) next()
 				else onDenied(req, res, next)
 			}

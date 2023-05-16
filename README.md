@@ -8,7 +8,7 @@ and control access to different parts of your application.
 ## Installation
 
 ```bash
-npm install imjano_can_i_middleware
+npm install imjano_can_i_mw
 ```
 
 ## Usage
@@ -16,54 +16,29 @@ npm install imjano_can_i_middleware
 import canIMiddleware
 
 ```javascript
-const canIMiddleware = require('imjano_can_i_middleware')
+const canIMiddleware = require('imjano_can_i_mw')
 ```
 
-Create a grants object, in this example ROOT and GUEST are roles
+Create a grants object.
 
 ```javascript
-const grants = {
-	ROOT: {
-		can: {
-			create: {
-				own: ['FOO'],
-				any: ['BAR'],
-			},
-			read: {
-				own: [],
-				any: [],
-			},
-			update: {
-				own: [],
-				any: [],
-			},
-			delete: {
-				own: [],
-				any: [],
-			},
-		},
+const grants = [
+	{
+		role: 'admin',
+		canCreateAny: ['foo'],
+		canReadAny: ['foo'],
+		canUpdateAny: ['foo'],
+		canDeleteAny: ['foo'],
 	},
-	GUEST: {
-		can: {
-			create: {
-				own: [],
-				any: [],
-			},
-			read: {
-				own: [],
-				any: [],
-			},
-			update: {
-				own: [],
-				any: [],
-			},
-			delete: {
-				own: [],
-				any: [],
-			},
-		},
+	{
+		role: 'editor',
+		canUpdateAny: ['foo'],
 	},
-}
+	{
+		role: 'viewer',
+		canReadOwn: ['foo'],
+	},
+]
 ```
 
 Create a onDeny function, it will be called if the request is not authorized
@@ -88,7 +63,7 @@ const canI = canIMiddleware.configure({
 	roleLocationPath: roleLocationPath,
 	onDenied: onDenied,
 })
-app.get('foo/', canI.create('own', 'FOO'), (req, res, next) => {
-	res.status(200).json({ res: 'foo' })
+app.get('foo/', canI.create('own', 'foo'), (req, res, next) => {
+	res.status(200).json({ foo: 'bar' })
 })
 ```

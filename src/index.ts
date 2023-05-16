@@ -1,58 +1,73 @@
-import {
-	TCanIMiddlewareBelongingKey,
-	TCanIMiddleware,
-	TCanIMiddlewareConfig,
-	TCanIMiddlewareResourcesDict,
-} from './types'
+import { TCanIMiddleware, TCanIMiddlewareConfig } from './types'
 
 import utils from './utils'
 
-let defaultResources: TCanIMiddlewareResourcesDict = {
-	FOO: 'FOO',
-}
-
-let defaultCanI: TCanIMiddleware = {
-	create: function (
-		belonging: TCanIMiddlewareBelongingKey,
-		resource: string
-	): (request: any, response: any, next: any) => void {
-		return (request: any, response: any, next: any) =>
-			response.status(500).json({ error: 'Function not implemented' })
-	},
-	read: function (
-		belonging: TCanIMiddlewareBelongingKey,
-		resource: string
-	): (request: any, response: any, next: any) => void {
-		return (request: any, response: any, next: any) =>
-			response.status(500).json({ error: 'Function not implemented' })
-	},
-	update: function (
-		belonging: TCanIMiddlewareBelongingKey,
-		resource: string
-	): (request: any, response: any, next: any) => void {
-		return (request: any, response: any, next: any) =>
-			response.status(500).json({ error: 'Function not implemented' })
-	},
-	delete: function (
-		belonging: TCanIMiddlewareBelongingKey,
-		resource: string
-	): (request: any, response: any, next: any) => void {
-		return (request: any, response: any, next: any) =>
-			response.status(500).json({ error: 'Function not implemented' })
-	},
-}
+import defaultCanI from './default_middleware'
 
 export default class CanIMiddleware {
+	/**
+	 * @description CanI Middleware is a custom middleware for Express.js applications that grants access to resources based on user roles. It provides a simple and flexible way to manage authorization and control access to different parts of your application.
+	 * @example
+	 * app.get(
+	 * 	'foo',
+	 * 	canI.read('any', 'foo'),
+	 * 	(req, res, next)=> res.status(200).json({foo: 'bar'})
+	 * )
+	 * app.post(
+	 * 	'foo',
+	 * 	canI.create('any', 'foo'),
+	 * 	(req, res, next)=> res.status(200).json({foo: 'foo was created'})
+	 * )
+	 */
 	static canI: TCanIMiddleware = defaultCanI
-	static resources: TCanIMiddlewareResourcesDict = defaultResources
+
+	/**
+	 *
+	 * @param config: TCanIMiddlewareConfig
+	 * @returns canI
+	 * @example
+	 * const grants = {
+	 * 	USER: {
+	 * 		can: {
+	 * 			create: {
+	 * 				own: ['FOO']
+	 * 				any: []
+	 * 			}
+	 * 		}
+	 * 	}
+	 * }
+	 * const onDenied = (req, res, next) => res.status(403).json({error: 'forbiden'})
+	 * const roleLocationPath = 'auth.user.role'
+	 * const config = { grants, onDenied, roleLocationPath }
+	 * const canI = TCanIMiddleware.configure( config )
+	 */
 	static configure(config: TCanIMiddlewareConfig): TCanIMiddleware {
-		CanIMiddleware.resources = config.resources ?? defaultResources
 		CanIMiddleware.canI = utils.buildMiddleware(config)
 		return CanIMiddleware.canI
 	}
 
+	/**
+	 *
+	 * @param config: TCanIMiddlewareConfig
+	 * @returns canI
+	 * @example
+	 * const grants = {
+	 * 	USER: {
+	 * 		can: {
+	 * 			create: {
+	 * 				own: ['FOO']
+	 * 				any: []
+	 * 			}
+	 * 		}
+	 * 	}
+	 * }
+	 * const onDenied = (req, res, next) => res.status(403).json({error: 'forbiden'})
+	 * const roleLocationPath = 'auth.user.role'
+	 * const config = { grants, onDenied, roleLocationPath }
+	 * const canIMd = new CanIMiddleware( config )
+	 */
 	constructor(config: TCanIMiddlewareConfig) {
-		CanIMiddleware.resources = config.resources ?? defaultResources
+		CanIMiddleware.configure(config)
 		CanIMiddleware.canI = utils.buildMiddleware(config)
 	}
 }
