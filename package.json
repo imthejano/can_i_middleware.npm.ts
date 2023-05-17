@@ -30,7 +30,7 @@
 		"typescript": "^5.0.4"
 	},
 	"dependencies": {
-		"get_object_in_object_imjano": "^1.0.4"
+		"imjano_get_object_in_object": "^1.0.2"
 	},
 	"repository": {
 		"type": "git",

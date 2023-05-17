@@ -1,4 +1,4 @@
-import getObjectInObject from 'get_object_in_object_imjano'
+import getObjectInObject from 'imjano_get_object_in_object'
 import {
 	TCanIMiddlewareGrantsBelongingKey,
 	TCanIMiddleware,
