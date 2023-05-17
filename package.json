@@ -18,7 +18,8 @@
 		"role",
 		"auth",
 		"authorization",
-		"access"
+		"access",
+		"imjano"
 	],
 	"author": "Alejandro Garcia <imjano@outlook.com>",
 	"license": "ISC",
