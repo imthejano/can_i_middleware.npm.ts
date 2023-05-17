@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const get_object_in_object_imjano_1 = require("get_object_in_object_imjano");
+const imjano_get_object_in_object_1 = require("imjano_get_object_in_object");
 const onDeniedDefaultFunction = (req, res, next) => res
     .status(403)
     .json({ error: 'you do not have permissions for this resource' });
@@ -70,7 +70,7 @@ const buildMiddleware = (config) => {
         create: (belonging, resource) => {
             return (req, res, next) => {
                 var _a;
-                let role = (_a = (0, get_object_in_object_imjano_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
+                let role = (_a = (0, imjano_get_object_in_object_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
                 if (isGranted(role).for('create', belonging, resource))
                     next();
                 else
@@ -80,7 +80,7 @@ const buildMiddleware = (config) => {
         read: (belonging, resource) => {
             return (req, res, next) => {
                 var _a;
-                let role = (_a = (0, get_object_in_object_imjano_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
+                let role = (_a = (0, imjano_get_object_in_object_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
                 if (isGranted(role).for('read', belonging, resource))
                     next();
                 else
@@ -90,7 +90,7 @@ const buildMiddleware = (config) => {
         update: (belonging, resource) => {
             return (req, res, next) => {
                 var _a;
-                let role = (_a = (0, get_object_in_object_imjano_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
+                let role = (_a = (0, imjano_get_object_in_object_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
                 if (isGranted(role).for('update', belonging, resource))
                     next();
                 else
@@ -100,7 +100,7 @@ const buildMiddleware = (config) => {
         delete: (belonging, resource) => {
             return (req, res, next) => {
                 var _a;
-                let role = (_a = (0, get_object_in_object_imjano_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
+                let role = (_a = (0, imjano_get_object_in_object_1.default)(req, config.roleLocationPath)) !== null && _a !== void 0 ? _a : 'GUEST';
                 if (isGranted(role).for('delete', belonging, resource))
                     next();
                 else
