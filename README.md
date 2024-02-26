@@ -8,7 +8,7 @@ and control access to different parts of your application.
 ## Installation
 
 ```bash
-npm install imjano_can_i_mw
+npm install @imjano/can_i_mw
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install imjano_can_i_mw
 import canIMiddleware
 
 ```javascript
-const canIMiddleware = require('imjano_can_i_mw')
+const canIMiddleware = require('@imjano/can_i_mw')
 ```
 
 Create a grants object.

@@ -61,7 +61,7 @@ export default class CanIMiddleware {
 	 * 		}
 	 * 	}
 	 * }
-	 * const onDenied = (req, res, next) => res.status(403).json({error: 'forbiden'})
+	 * const onDenied = (req, res, next) => res.status(403).json({error: 'forbidden'})
 	 * const roleLocationPath = 'auth.user.role'
 	 * const config = { grants, onDenied, roleLocationPath }
 	 * const canIMd = new CanIMiddleware( config )
